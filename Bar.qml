@@ -30,11 +30,15 @@ PanelWindow {
         readonly property var acWin: {
             const wholeName= Hyprland.activeToplevel?.title
             // console.log(wholeName)
-            if (!wholeName) return "Desktop";
-            // console.log(wholeName)
-            const reg = /[^—–-]+$/
-            // console.log(wholeName.match(reg)[0] ?? 'Desktop')
-            return wholeName.match(reg)[0]
+            // if (!wholeName) return Tr.trCtx("Desktop", "shown when no window is focused");
+            // const reg = /[^—–-]+$/
+            // return wholeName.match(reg)[0]
+            const reg = /^.*\s[—–-]\s/
+            return wholeName.replace(reg, "")
+
+            // const parts = wholeName.split(/\s+[\-\u2013\u2014]\s+/);
+            // if (parts.length > 1)
+            //     return parts[parts.length - 1].trim();
         }
 
         MarginWrapperManager { margin: 15 }
@@ -97,7 +101,7 @@ PanelWindow {
             }
 
             property var tray:{
-                console.log(SystemTray.items.values[0].menu)
+                // console.log(SystemTray.items.values[0].menu)
                 // SystemTray.items.values[0].activate
             }
 
@@ -115,7 +119,6 @@ PanelWindow {
                             acceptedButtons: Qt.LeftButton | Qt.RightButton
                             onClicked: event=>{
                                 if (event.button === Qt.LeftButton) SystemTray.items.values[index].secondaryActivate()
-
                             }
 
                             Image{
@@ -123,11 +126,10 @@ PanelWindow {
                                 source: SystemTray.items.values[index].icon
                             }
                         }
-                        QsMenuOpener {
-                            menu: SystemTray.items.values[0].menu
-                        }
                     }
                 }
             }
+
+
         }
 }

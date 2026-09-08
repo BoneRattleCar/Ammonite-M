@@ -8,9 +8,5 @@ Scope {
     // Dashboard {}
     Background {}
     Borders {}
-    // Bar {}
-    //
-    // PanelWindow{
-    //
-    // }
+    TrayMenu {}
 }
