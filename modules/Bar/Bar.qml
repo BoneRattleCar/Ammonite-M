@@ -100,36 +100,53 @@ PanelWindow {
                 }
             }
 
-            property var tray:{
-                // console.log(SystemTray.items.values[0].menu)
-                // SystemTray.items.values[0].activate
-            }
+            // property var tray:{
+            //     console.log(SystemTray.items.values[0].menu)
+            //     SystemTray.items.values[0].activate
+            // }
 
             ColumnLayout {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
-                Repeater {
-                    model:SystemTray.items.values.length
-                    Item{
-                        implicitWidth:25
-                        implicitHeight:25
 
-                        MouseArea {
-                            anchors.fill:parent
-                            acceptedButtons: Qt.LeftButton | Qt.RightButton
-                            onClicked: event=>{
-                                if (event.button === Qt.LeftButton) SystemTray.items.values[index].secondaryActivate()
-                            }
+                ColumnLayout {
+                    Layout.alignment: Qt.AlignHCenter
 
-                            Image{
+                    Repeater {
+                        model:SystemTray.items.values.length
+                        Item{
+                            implicitWidth:25
+                            implicitHeight:25
+
+                            MouseArea {
                                 anchors.fill:parent
-                                source: SystemTray.items.values[index].icon
+                                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                                onClicked: event=>{
+                                    if (event.button === Qt.LeftButton) SystemTray.items.values[index].secondaryActivate()
+                                }
+
+                                Image{
+                                    id:icon
+                                    anchors.fill:parent
+                                    source: SystemTray.items.values[index].icon
+                                }
                             }
                         }
                     }
                 }
+
+                ColumnLayout {
+                    // anchors.horizontalCenter: parent.horizontalCenter
+                    Layout.alignment: Qt.AlignHCenter
+
+                    Text{
+                        text:Time.hour
+                    }
+
+                    Text{
+                        text:Time.mins
+                    }
+                }
             }
-
-
         }
 }

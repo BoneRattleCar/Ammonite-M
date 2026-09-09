@@ -1,9 +1,10 @@
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
+import QtQuick.Effects
+import "modules/Bar"
 import qs.services
 import QtQuick.Shapes
-import QtQuick.Effects
 
 Scope {
     id: root

@@ -27,6 +27,6 @@ PanelWindow{
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
         layer.enabled: true
-        source: "assets/wpp.jpg"
+        source: "../../assets/wpp.jpg"
     }
 }
