@@ -14,6 +14,14 @@ PanelWindow {
 
     implicitWidth: 200
     implicitHeight: 200
+
+    anchors.left:true
+    // anchors.top:true
+    // anchors.bottom:true
+
+    WlrLayershell.exclusionMode: ExclusionMode.Ignore
+    margins.left:45
+
     QsMenuOpener {
         id: menuOpener
 
@@ -28,8 +36,10 @@ PanelWindow {
                 implicitWidth: 20
                 implicitHeight: 20
 
+
                 Text{
                     text: menuOpener.children.values[index].text
+
                     property string a: {
                         console.log(menuOpener.children.values[index].text.length === 0 ? "notext" : "bleh")
                     return "a"

@@ -46,7 +46,7 @@ Scope {
                 anchors.fill: parent
                 smooth:true
                 visible:false
-                color: "#ffc0ca"
+                color: "white"
             }
 
             Item {
