@@ -10,40 +10,48 @@ import QtQuick.Shapes
 import QtQuick.Effects
 import QtQuick.Layouts
 
-PanelWindow {
+PopupWindow {
     id:root
 
     property int yPos: 0
+    property int xPos: 0
+    property PanelWindow panelWindow
     property int menuIndex
 
-    screen: Quickshell.screens[1]
+    anchor.window: panelWindow
+    anchor.rect.x: xPos
+    anchor.rect.y: yPos
+
     implicitWidth: 200
-    implicitHeight: 200
+    implicitHeight: Math.max(1, menuContent.implicitHeight)
+    visible: false
+    // grabFocus: true
 
-    anchors.left:true
-    anchors.top:true
-    // anchors.bottom:true
+    function showMenu() {
+        if (targetItem) {
+            visible = true
+        }
+    }
 
-    WlrLayershell.exclusionMode: ExclusionMode.Ignore
-    margins.left:45
-    margins.top: yPos - root.height / 2
-
-
+    function hideMenu() {
+        visible = false
+    }
 
     QsMenuOpener {
         id: menuOpener
-
         menu: SystemTray.items.values[menuIndex].menu
     }
 
-    ColumnLayout {
-        Repeater {
-            model: menuOpener.children
+    Rectangle {
+        id: contentRect
+        anchors.fill: parent
+        color: "#ffffff"
+        radius: 6
 
-            Rectangle {
-                implicitWidth: 20
-                implicitHeight: 20
-
+        ColumnLayout {
+            id: menuContent
+            Repeater {
+                model: menuOpener.children
 
                 Text{
                     text: menuOpener.children.values[index].text

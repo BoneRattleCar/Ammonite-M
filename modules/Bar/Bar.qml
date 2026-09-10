@@ -122,30 +122,56 @@ PanelWindow {
                             implicitWidth:25
                             implicitHeight:25
 
-                            Image{
-                                id:trayIcon
-                                anchors.fill:parent
-                                source: modelData.icon
-                            }
+
 
                             MouseArea {
                                 anchors.fill:parent
                                 acceptedButtons: Qt.LeftButton | Qt.RightButton
+                                hoverEnabled: true
 
                                 onClicked: event=>{
                                     if (event.button === Qt.LeftButton) {
                                         modelData.secondaryActivate()
                                     } else if (event.button === Qt.RightButton) {
-                                        if (modelData.hasMenu) {
-                                            const pos = mapToItem(null, event.x, event.y)
-                                            // console.log(pos)
-                                            trayMenu.yPos = pos.y
-                                            trayMenu.menuIndex = index
-
-                                            // modelData.display(root, pos.x, pos.y)
-                                        }
+                                        // if (modelData.hasMenu) {
+                                        //     const pos = mapToItem(null, event.x, event.y)
+                                        //     // console.log(pos)
+                                        //     trayMenu.yPos = pos.y
+                                        //     trayMenu.xPos = pos.x
+                                        //     trayMenu.menuIndex = index
+                                        //     trayMenu.panelWindow = root
+                                        //     trayMenu.visible = true
+                                        //
+                                        //     // modelData.display(root, pos.x, pos.y)
+                                        // }
                                     }
                                 }
+
+                                onEntered: {
+                                    console.log("asdad")
+                                    trayMenu.yPos = 500
+                                    trayMenu.xPos = 500
+                                    trayMenu.menuIndex = index
+                                    trayMenu.panelWindow = root
+                                    trayMenu.showMenu()
+                                    // trayMenu.targetItem = trayIcon
+                                    // trayMenu.currentModelData = modelData
+                                    // trayMenu.showMenu()
+                                }
+
+                                onExited: {
+                                    trayMenu.hideMenu
+                                }
+
+                                onPositionChanged: mouse => {
+                                    console.log(mouse.y)
+                                }
+                            }
+
+                            Image{
+                                id:trayIcon
+                                anchors.fill:parent
+                                source: modelData.icon
                             }
 
                             TrayMenu {
