@@ -110,48 +110,48 @@ PanelWindow {
                 anchors.bottom: parent.bottom
 
                 ColumnLayout {
+                    id: trayColumn
                     Layout.alignment: Qt.AlignHCenter
 
                     Repeater {
                         model:SystemTray.items.values
 
-                        Item{
+                        delegate: Item{
+                            id: trayItem
+
                             implicitWidth:25
                             implicitHeight:25
+
+                            Image{
+                                id:trayIcon
+                                anchors.fill:parent
+                                source: modelData.icon
+                            }
 
                             MouseArea {
                                 anchors.fill:parent
                                 acceptedButtons: Qt.LeftButton | Qt.RightButton
+
                                 onClicked: event=>{
                                     if (event.button === Qt.LeftButton) {
                                         modelData.secondaryActivate()
                                     } else if (event.button === Qt.RightButton) {
-                                        modelData.menuOpener.open()
-                                    }
-                                }
+                                        if (modelData.hasMenu) {
+                                            const pos = mapToItem(null, event.x, event.y)
+                                            // console.log(pos)
+                                            trayMenu.yPos = pos.y
+                                            trayMenu.menuIndex = index
 
-                                Image{
-                                    id:icon
-                                    anchors.fill:parent
-                                    source: modelData.icon
+                                            // modelData.display(root, pos.x, pos.y)
+                                        }
+                                    }
                                 }
                             }
 
                             TrayMenu {
+                                id:trayMenu
 
                             }
-
-                            // PanelWindow {
-                            //     color:"#ffc0ca"
-                            //     screen: Quickshell.screens[1]
-                            //     WlrLayershell.exclusionMode: ExclusionMode.Ignore
-                            //
-                            //     anchors {
-                            //         top: true
-                            //         left: true
-                            //
-                            //     }
-                            // }
                         }
                     }
                 }

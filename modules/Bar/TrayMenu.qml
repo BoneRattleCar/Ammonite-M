@@ -11,6 +11,11 @@ import QtQuick.Effects
 import QtQuick.Layouts
 
 PanelWindow {
+    id:root
+
+    property int yPos: 0
+    property int menuIndex
+
     screen: Quickshell.screens[1]
     implicitWidth: 200
     implicitHeight: 200
@@ -21,14 +26,14 @@ PanelWindow {
 
     WlrLayershell.exclusionMode: ExclusionMode.Ignore
     margins.left:45
-    margins.top:450
+    margins.top: yPos - root.height / 2
 
 
 
     QsMenuOpener {
         id: menuOpener
 
-        menu: SystemTray.items.values[0].menu
+        menu: SystemTray.items.values[menuIndex].menu
     }
 
     ColumnLayout {
