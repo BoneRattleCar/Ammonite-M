@@ -113,7 +113,8 @@ PanelWindow {
                     Layout.alignment: Qt.AlignHCenter
 
                     Repeater {
-                        model:SystemTray.items.values.length
+                        model:SystemTray.items.values
+
                         Item{
                             implicitWidth:25
                             implicitHeight:25
@@ -122,19 +123,17 @@ PanelWindow {
                                 anchors.fill:parent
                                 acceptedButtons: Qt.LeftButton | Qt.RightButton
                                 onClicked: event=>{
-                                    const trayItem = SystemTray.items.values[index]
                                     if (event.button === Qt.LeftButton) {
-                                        trayItem.secondaryActivate()
+                                        modelData.secondaryActivate()
                                     } else if (event.button === Qt.RightButton) {
-                                        // Open the context menu
-                                        trayItem.menuOpener.open()
+                                        modelData.menuOpener.open()
                                     }
                                 }
 
                                 Image{
                                     id:icon
                                     anchors.fill:parent
-                                    source: SystemTray.items.values[index].icon
+                                    source: modelData.icon
                                 }
                             }
 
