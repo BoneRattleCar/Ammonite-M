@@ -10,18 +10,18 @@ import QtQuick.Shapes
 import QtQuick.Effects
 import QtQuick.Layouts
 
-Window {
+PanelWindow {
     screen: Quickshell.screens[1]
-    // implicitWidth: 200
-    // implicitHeight: 200
+    implicitWidth: 200
+    implicitHeight: 200
 
-    // anchors.left:true
-    // anchors.top:true
+    anchors.left:true
+    anchors.top:true
     // anchors.bottom:true
 
-    // WlrLayershell.exclusionMode: ExclusionMode.Ignore
-    // margins.left:45
-    flags: Qt.Popup | Qt.FramelessWindowHint
+    WlrLayershell.exclusionMode: ExclusionMode.Ignore
+    margins.left:45
+    margins.top:450
 
 
 

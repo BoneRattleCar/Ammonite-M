@@ -122,7 +122,13 @@ PanelWindow {
                                 anchors.fill:parent
                                 acceptedButtons: Qt.LeftButton | Qt.RightButton
                                 onClicked: event=>{
-                                    if (event.button === Qt.LeftButton) SystemTray.items.values[index].secondaryActivate()
+                                    const trayItem = SystemTray.items.values[index]
+                                    if (event.button === Qt.LeftButton) {
+                                        trayItem.secondaryActivate()
+                                    } else if (event.button === Qt.RightButton) {
+                                        // Open the context menu
+                                        trayItem.menuOpener.open()
+                                    }
                                 }
 
                                 Image{
@@ -131,12 +137,27 @@ PanelWindow {
                                     source: SystemTray.items.values[index].icon
                                 }
                             }
+
+                            TrayMenu {
+
+                            }
+
+                            // PanelWindow {
+                            //     color:"#ffc0ca"
+                            //     screen: Quickshell.screens[1]
+                            //     WlrLayershell.exclusionMode: ExclusionMode.Ignore
+                            //
+                            //     anchors {
+                            //         top: true
+                            //         left: true
+                            //
+                            //     }
+                            // }
                         }
                     }
                 }
 
                 ColumnLayout {
-                    // anchors.horizontalCenter: parent.horizontalCenter
                     Layout.alignment: Qt.AlignHCenter
 
                     Text{

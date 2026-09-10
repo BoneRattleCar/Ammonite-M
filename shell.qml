@@ -10,5 +10,5 @@ Scope {
     // Dashboard {}
     Background {}
     Borders {}
-    TrayMenu {}
+    // TrayMenu {}
 }
