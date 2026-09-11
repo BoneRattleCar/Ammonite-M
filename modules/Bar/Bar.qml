@@ -12,44 +12,26 @@ import QtQuick.Layouts
 PanelWindow {
         id:root
         readonly property var occupied: {
-            // const occ = {};
-            // for (const ws of Hyprland.workspaces.values)
-            //     occ[ws.id] = ws.lastIpcObject.windows > 0;
-            //     console.log(occ[ws.id])
-            // return occ;
-
-            // console.log(Hyprland.activeToplevel.title)
             const occ = {};
-            // Hyprland.workspaces.values.map(ws=>console.log(ws.id));
-            // console.log(Hyprland.workspaces.values)
             Hyprland.workspaces.values.map(ws=>occ[ws.id]=ws.active);
-            // console.log(JSON.stringify(occ, null, 2))
             return occ;
         }
 
         readonly property var acWin: {
             const wholeName= Hyprland.activeToplevel?.title
-            // console.log(wholeName)
-            // if (!wholeName) return Tr.trCtx("Desktop", "shown when no window is focused");
-            // const reg = /[^—–-]+$/
-            // return wholeName.match(reg)[0]
             const reg = /^.*\s[—–-]\s/
             return wholeName.replace(reg, "")
-
-            // const parts = wholeName.split(/\s+[\-\u2013\u2014]\s+/);
-            // if (parts.length > 1)
-            //     return parts[parts.length - 1].trim();
         }
 
         MarginWrapperManager { margin: 15 }
 
         Rectangle {
+            id: content
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
 
             Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
-                // anchors.verticalCenter: parent.verticalCenter
                 color:"#ffc0ca"
                 implicitWidth:30
                 implicitHeight:150
@@ -79,8 +61,6 @@ PanelWindow {
                 rotation:-90
 
                 Behavior on text {
-                    // enabled: text.animate
-
                     SequentialAnimation {
                         NumberAnimation {
                             target: text
@@ -100,11 +80,6 @@ PanelWindow {
                 }
             }
 
-            // property var tray:{
-            //     console.log(SystemTray.items.values[0].menu)
-            //     SystemTray.items.values[0].activate
-            // }
-
             ColumnLayout {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
@@ -120,6 +95,8 @@ PanelWindow {
 
                         delegate: Item{
                             id: trayItem
+                            required property var modelData
+                            required property int index
 
                             implicitWidth:25
                             implicitHeight:25
@@ -134,44 +111,18 @@ PanelWindow {
                                 onHoveredChanged: {
                                     if(hovered){
                                         trayColumn.hoveredIndex = index
-                                        trayColumn.hoveredY = trayItem.
+                                        trayColumn.hoveredY = trayItem.mapToItem(null, 0, trayItem.height / 2).y
+                                        trayMenu.notifyHover(modelData, trayColumn.hoveredY)
+                                    } else {
+                                        trayMenu.notifyLeave()
                                     }
-
                                 }
                             }
-
-                            // MouseArea {
-                            //     anchors.fill:parent
-                            //     acceptedButtons: Qt.LeftButton | Qt.RightButton
-                            //     hoverEnabled: true
-                            //
-                            //     onClicked: event=>{
-                            //         if (event.button === Qt.LeftButton) {
-                            //             modelData.secondaryActivate()
-                            //         } else if (event.button === Qt.RightButton) {
-                            //             // if (modelData.hasMenu) {
-                            //             //     const pos = mapToItem(null, event.x, event.y)
-                            //             //     // console.log(pos)
-                            //             //     trayMenu.yPos = pos.y
-                            //             //     trayMenu.xPos = pos.x
-                            //             //     trayMenu.menuIndex = index
-                            //             //     trayMenu.panelWindow = root
-                            //             //     trayMenu.visible = true
-                            //             //
-                            //             //     // modelData.display(root, pos.x, pos.y)
-                            //             // }
-                            //         }
-                            //     }
-                            //
-                            // }
-
-
-
-                            TrayMenu {
-                                id:trayMenu
-
-                            }
                         }
+                    }
+
+                    TrayMenu {
+                        id: trayMenu
                     }
                 }
 
