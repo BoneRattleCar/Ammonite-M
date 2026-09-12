@@ -83,7 +83,7 @@ PanelWindow {
             ColumnLayout {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
-                spacing:200
+                // spacing:200
 
                 ColumnLayout {
                     id: trayColumn

@@ -33,7 +33,8 @@ PanelWindow {
         menuItem = item
         targetY = y
 
-        visualRect.width = menuColumn.implicitWidth + 24
+        // visualRect.width = menuColumn.implicitWidth + 24
+        visualRect.width = 250
         ib1.rounding = 20
         ib2.rounding = 20
     }
@@ -58,10 +59,36 @@ PanelWindow {
     QsMenuOpener {
         id: menuOpener
         menu: root.menuItem && root.menuItem.hasMenu ? root.menuItem.menu : null
+
+        Behavior on menu {
+            SequentialAnimation {
+                NumberAnimation {
+                    target: menuColumn
+                    property: "opacity"
+                    to: 0
+                    duration:0
+                }
+                PropertyAction {}
+                NumberAnimation {
+                    target: menuColumn
+                    property: "opacity"
+                    to: 1
+                    duration:200
+
+                }
+            }
+        }
+
     }
 
-    implicitWidth: visualRect.width*2
+    // implicitWidth: visualRect.width*2
+    implicitWidth: 500
     implicitHeight: 400
+
+    mask: Region {
+        item: visualRect
+
+    }
 
     color: "transparent"
     WlrLayershell.namespace: "quickshell-tray-menu"
@@ -85,7 +112,10 @@ PanelWindow {
         bottomRightRadius:10
         clip: true
 
-        width: root.hovering ? (menuColumn.implicitWidth + 24) : 0
+        //managed by notifyHover on top so dunno why this was here
+        // width: root.hovering ? (menuColumn.implicitWidth + 24) : 0
+        // width: root.hovering ? 250 : 0
+
 
         //to change to last height when hovering out
         // height: {
@@ -118,17 +148,23 @@ PanelWindow {
 
         ColumnLayout {
             id: menuColumn
-            anchors.centerIn: parent
+            // anchors.centerIn: parent
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.leftMargin:15
+
             spacing: 2
 
             Repeater {
                 model: menuOpener.children
                 delegate: Text {
-
+                    Layout.fillWidth: true
                     required property var modelData
                     visible: !modelData.isSeparator
                     text: modelData.text
                     color: modelData.enabled ? "#000000" : "#6c7086"
+                    horizontalAlignment: Text.AlignLeft
 
                     TapHandler {
                         enabled: modelData.enabled
@@ -140,7 +176,6 @@ PanelWindow {
                 }
             }
         }
-
     }
 
     InvertedBorder {
