@@ -8,6 +8,8 @@ import "../../"
 PanelWindow {
     id: root
 
+    property int animSpeed: 300
+
     property var menuItem: null
     property real targetY: 1000
     property bool _itemHovered: false
@@ -15,6 +17,8 @@ PanelWindow {
 
     property bool hovering: menuItem !== null
     property bool closing: false
+
+    property int lastHeight: 200
 
     onHoveringChanged: {
         if (!hovering)
@@ -28,8 +32,10 @@ PanelWindow {
         hideTimer.stop()
         menuItem = item
         targetY = y
-        ib1.rounding = 20
 
+        visualRect.width = menuColumn.implicitWidth + 24
+        ib1.rounding = 20
+        ib2.rounding = 20
     }
 
     function notifyLeave() {
@@ -39,11 +45,13 @@ PanelWindow {
 
     Timer {
         id: hideTimer
-        interval: 150
+        interval: 100
         onTriggered: {
             if (!root._itemHovered && !root._panelHovered)
-                root.menuItem = null
-                ib1.rounding = 0
+                // root.menuItem = null
+                visualRect.width = 0
+                ib1.rounding = 0;
+                ib2.rounding = 0;
         }
     }
 
@@ -52,8 +60,8 @@ PanelWindow {
         menu: root.menuItem && root.menuItem.hasMenu ? root.menuItem.menu : null
     }
 
-    implicitWidth: 320
-    implicitHeight: 600
+    implicitWidth: visualRect.width*2
+    implicitHeight: 400
 
     color: "transparent"
     WlrLayershell.namespace: "quickshell-tray-menu"
@@ -65,7 +73,7 @@ PanelWindow {
     anchors.top: true
     margins.left: 45
     margins.top: targetY - implicitHeight / 2
-    Behavior on margins.top { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
+    Behavior on margins.top { NumberAnimation { duration: root.animSpeed; easing.type: Easing.OutCubic } }
 
     Rectangle {
         id: visualRect
@@ -73,17 +81,24 @@ PanelWindow {
         anchors.verticalCenter: parent.verticalCenter
 
         color: "#ffffff"
-        topRightRadius:8
-        bottomRightRadius:8
+        topRightRadius:10
+        bottomRightRadius:10
         clip: true
 
         width: root.hovering ? (menuColumn.implicitWidth + 24) : 0
+
+        //to change to last height when hovering out
+        // height: {
+        //     root.menuItem ? menuColumn.implicitHeight + 16 : root.lastHeight
+        // }
+
         height: menuColumn.implicitHeight + 16
+
 
         Behavior on width {
             NumberAnimation {
                 id: widthAnim
-                duration: 1500
+                duration: root.animSpeed
                 easing.type: Easing.OutCubic
                 onRunningChanged: {
                     if (!running && !root.hovering)
@@ -91,7 +106,7 @@ PanelWindow {
                 }
             }
         }
-        Behavior on height { NumberAnimation { duration: 1500; easing.type: Easing.OutCubic } }
+        Behavior on height { NumberAnimation { duration: root.animSpeed; easing.type: Easing.OutCubic } }
 
         HoverHandler {
             onHoveredChanged: {
@@ -130,14 +145,22 @@ PanelWindow {
 
     InvertedBorder {
         id: ib1
-        roundingColor:"#ffc0ca"
-        rounding: 20
+        roundingColor:"#ffffff"
+        rounding: 0
         rotation:180
-        anchors.top:visualRect.top
+        anchors.bottom:visualRect.top
         anchors.topMargin: -20
-        transformOrigin: BottomLeft
 
-        Behavior on rounding { NumberAnimation { duration: 1500; easing.type: Easing.OutCubic } }
+        Behavior on rounding { NumberAnimation { duration: root.animSpeed; easing.type: Easing.OutCubic } }
+    }
+    InvertedBorder {
+        id: ib2
+        roundingColor:"#ffffff"
+        rounding: 0
+        rotation: -90
+        anchors.top:visualRect.bottom
+        anchors.bottomMargin: -20
 
+        Behavior on rounding { NumberAnimation { duration: root.animSpeed; easing.type: Easing.OutCubic } }
     }
 }
