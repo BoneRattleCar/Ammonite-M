@@ -22,11 +22,31 @@ PanelWindow{
     anchors.right: true
 
     Image {
-        id: image
+        id: wp
 
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
         layer.enabled: true
-        source: "../../assets/wpp.jpg"
+
+        source: "../../assets/wp.jpg"
+
+        Behavior on source {
+            SequentialAnimation {
+                NumberAnimation {
+                    target: wp
+                    property: "opacity"
+                    to: 0
+                    duration:100
+                }
+                PropertyAction {}
+                NumberAnimation {
+                    target: wp
+                    property: "opacity"
+                    to: 1
+                    duration:100
+
+                }
+            }
+        }
     }
 }

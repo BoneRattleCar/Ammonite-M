@@ -8,6 +8,10 @@ import qs.services
 import QtQuick.Shapes
 import QtQuick.Effects
 import QtQuick.Layouts
+import org.kde.kirigami as Kirigami
+
+import "../../"
+
 
 PanelWindow {
         id:root
@@ -138,6 +142,9 @@ PanelWindow {
                         text:Time.mins
                     }
                 }
+
+
             }
+                // Colors {}
         }
 }
