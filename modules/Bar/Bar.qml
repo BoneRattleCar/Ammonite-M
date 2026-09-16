@@ -33,10 +33,11 @@ PanelWindow {
             id: content
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
+            color:"transparent"
 
             Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
-                color:"#ffc0ca"
+                color: Theme.surfaceContainerHigh
                 implicitWidth:30
                 implicitHeight:150
                 radius:15
@@ -47,7 +48,7 @@ PanelWindow {
                         model: 5
                         Rectangle {
                             required property int index
-                            color:`${occupied[index+1] ? "black" : occupied.hasOwnProperty(index+1) ? "gray" : "white"}`
+                            color:`${occupied[index+1] ? Theme.primary : occupied.hasOwnProperty(index+1) ? Theme.onPrimary : Theme.outlineVariant}`
                             implicitWidth:15
                             implicitHeight:15
                             radius:15
@@ -58,6 +59,8 @@ PanelWindow {
 
 
             Text{
+                color:Theme.primary
+
                 id:text
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
@@ -135,10 +138,12 @@ PanelWindow {
                     Layout.alignment: Qt.AlignHCenter
 
                     Text{
+                        color: Theme.primary
                         text:Time.hour
                     }
 
                     Text{
+                        color: Theme.primary
                         text:Time.mins
                     }
                 }

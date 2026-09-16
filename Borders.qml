@@ -8,7 +8,7 @@ import QtQuick.Shapes
 
 Scope {
     id: root
-    property string colorr: "#ffc0ca"
+    // property string colorr: "#ffc0ca"
     property int thickness: 5
     property int barSize: 40
 
@@ -47,7 +47,7 @@ Scope {
                 anchors.fill: parent
                 smooth:true
                 visible:false
-                color: "white"
+                color: Theme.surfaceContainer
             }
 
             Item {
@@ -78,7 +78,7 @@ Scope {
 
     Bar {
         screen: Quickshell.screens[1]
-        color: "white"
+        color: Theme.surfaceContainer
         anchors { left: true; top: true; bottom: true }
         implicitWidth: root.thickness + root.barSize
         WlrLayershell.exclusionMode: ExclusionMode.Normal

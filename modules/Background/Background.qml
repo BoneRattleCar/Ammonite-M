@@ -28,25 +28,6 @@ PanelWindow{
         fillMode: Image.PreserveAspectCrop
         layer.enabled: true
 
-        source: "../../assets/wp.jpg"
-
-        Behavior on source {
-            SequentialAnimation {
-                NumberAnimation {
-                    target: wp
-                    property: "opacity"
-                    to: 0
-                    duration:100
-                }
-                PropertyAction {}
-                NumberAnimation {
-                    target: wp
-                    property: "opacity"
-                    to: 1
-                    duration:100
-
-                }
-            }
-        }
+        source: "../../assets/sickGuy.jpg"
     }
 }
