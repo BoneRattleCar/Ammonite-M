@@ -28,7 +28,7 @@ PanelWindow{
     property bool completed
 
     Component.onCompleted: {
-        current = wpComp.createObject(wallpaperContainer, { source: "../../assets/wp.jpg" });
+        current = wpComp.createObject(wallpaperContainer, { source: "../../assets/wallpapers/wp.jpg" });
     }
 
     onSourceChanged:{
