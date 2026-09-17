@@ -23,7 +23,7 @@ PanelWindow{
     anchors.left: true
     anchors.right: true
 
-    property string source
+    property string source: WallpaperChanger.wp
     property Image current
     property bool completed
 
@@ -32,7 +32,7 @@ PanelWindow{
     }
 
     onSourceChanged:{
-        current = wpComp.createObject(wallpaperContainer, { source: "../../assets/wp.jpg" });
+        current = wpComp.createObject(wallpaperContainer, { source: source });
     }
 
     // Timer{
@@ -74,7 +74,7 @@ PanelWindow{
                 from: 0
                 to: 1
 
-                duration: 500
+                duration: 200
             }
         }
     }

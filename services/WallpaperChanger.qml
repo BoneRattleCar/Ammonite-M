@@ -1,5 +1,7 @@
+pragma Singleton
 import QtQuick
 import Quickshell
+import Qt.labs.folderlistmodel
 import Quickshell.Hyprland
 import Quickshell.Services.SystemTray
 import Quickshell.Widgets
@@ -15,15 +17,30 @@ PanelWindow {
 
     anchors.left: true
     anchors.right: true
-    implicitHeight:200
+    implicitHeight:300
 
     color:"transparent"
 
+    property string wp
+
+    mask: Region{
+        item: selectorArea
+    }
+
+
     Rectangle{
         id: selectorArea
-        anchors.leftMargin:290
+        anchors.leftMargin:0
 
         anchors.fill: parent
         color: "#ffc0ca"
+    }
+    MouseArea {
+        anchors.fill:parent
+
+        onClicked:{
+            // console.log("asdasdasddc")
+            wp = "../../assets/wpp.jpg"
+        }
     }
 }

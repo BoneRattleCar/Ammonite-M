@@ -12,5 +12,8 @@ Scope {
     // Dashboard {}
     Background {}
     Borders {}
-    WallpaperChanger {}
+    // WallpaperChanger {}
+    Component.onCompleted: {
+        WallpaperChanger.visible = true
+    }
 }
