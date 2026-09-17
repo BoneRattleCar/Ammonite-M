@@ -32,6 +32,7 @@ PanelWindow{
     }
 
     onSourceChanged:{
+        current.destroy()
         current = wpComp.createObject(wallpaperContainer, { source: source });
     }
 
@@ -72,7 +73,7 @@ PanelWindow{
                 target: wp
                 property: "opacity"
                 from: 0
-                to: 1
+                to: 0.5
 
                 duration: 200
             }
