@@ -14,6 +14,6 @@ Scope {
     Borders {}
     // WallpaperChanger {}
     Component.onCompleted: {
-        WallpaperChanger.visible = true
+        WallpaperChanger.visible = false
     }
 }

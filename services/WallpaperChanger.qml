@@ -2,6 +2,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Qt.labs.folderlistmodel
+import "../modules/Bar"
 import Quickshell.Hyprland
 import Quickshell.Services.SystemTray
 import Quickshell.Widgets
@@ -43,7 +44,7 @@ PanelWindow {
 
 
         anchors.fill: parent
-        color: "#ffc0ca"
+        color: Theme.surfaceContainer
 
         RowLayout {
             spacing:10
@@ -59,6 +60,11 @@ PanelWindow {
 
                     Text{
                         text: model.fileName
+                    }
+                    Image {
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectCrop
+                        source: model.fileUrl
                     }
                     MouseArea {
                         anchors.fill:parent
