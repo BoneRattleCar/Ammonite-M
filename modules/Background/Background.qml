@@ -73,7 +73,7 @@ PanelWindow{
                 target: wp
                 property: "opacity"
                 from: 0
-                to: 0.5
+                to: 1
 
                 duration: 200
             }
