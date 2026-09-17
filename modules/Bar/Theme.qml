@@ -11,6 +11,8 @@ Singleton{
 
     FileView {
         id: themeFile
+        watchChanges: true
+        onFileChanged: this.reload()
 
         path: Quickshell.shellDir + "/modules/Bar/theme.json"
 

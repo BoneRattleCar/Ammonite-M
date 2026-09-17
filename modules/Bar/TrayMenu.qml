@@ -87,7 +87,6 @@ PanelWindow {
 
     mask: Region {
         item: visualRect
-
     }
 
     color: "transparent"

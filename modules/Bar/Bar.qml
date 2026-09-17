@@ -11,6 +11,7 @@ import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 
 import "../../"
+import "../../services"
 
 
 PanelWindow {
@@ -64,7 +65,7 @@ PanelWindow {
                 id:text
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                text:root.acWin
+                text:root.acWin ?? "bleh"
                 rotation:-90
 
                 Behavior on text {

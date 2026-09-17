@@ -6,6 +6,8 @@ import qs.services
 import QtQuick.Shapes
 import QtQuick.Effects
 
+import "../../services"
+
 PanelWindow{
     screen: Quickshell.screens[1]
     exclusiveZone: 1
@@ -21,13 +23,59 @@ PanelWindow{
     anchors.left: true
     anchors.right: true
 
-    Image {
-        id: wp
+    property string source
+    property Image current
+    property bool completed
 
+    Component.onCompleted: {
+        current = wpComp.createObject(wallpaperContainer, { source: "../../assets/wp.jpg" });
+    }
+
+    onSourceChanged:{
+        current = wpComp.createObject(wallpaperContainer, { source: "../../assets/wp.jpg" });
+    }
+
+    // Timer{
+    //     interval: 5000
+    //     running:true
+    //     repeat:true
+    //     onTriggered: {
+    //         current.destroy()
+    //         current = wpComp.createObject(wallpaperContainer, { source: "../../assets/wpp.jpg" });
+    //     }
+    // }
+
+    Item {
+        id: wallpaperContainer
         anchors.fill: parent
-        fillMode: Image.PreserveAspectCrop
-        layer.enabled: true
+    }
+    Component {
+        id: wpComp
+        Image {
+            id: wp
+            asynchronous: true
 
-        source: "../../assets/sickGuy.jpg"
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectCrop
+            layer.enabled: true
+
+            // source: "../../assets/wpp.jpg"
+
+            onStatusChanged: {
+                if (status === Image.Ready)
+                    fadeInAnim.start();
+            }
+
+            PropertyAnimation {
+                id: fadeInAnim
+
+                target: wp
+                property: "opacity"
+                from: 0
+                to: 1
+
+                duration: 500
+            }
+        }
     }
 }

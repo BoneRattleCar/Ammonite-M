@@ -6,11 +6,11 @@ import Quickshell.Widgets
 import QtQuick.Layouts
 
 import "modules/Background"
+import "services"
 
 Scope {
-    // Bar {}
     // Dashboard {}
     Background {}
     Borders {}
-    // TrayMenu {}
+    WallpaperChanger {}
 }
