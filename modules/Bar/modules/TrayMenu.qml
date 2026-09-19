@@ -1,9 +1,9 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Quickshell.Services.SystemTray
 import Quickshell.Wayland
-import "../../"
+import "../../../"
+import "../../../services"
 
 PanelWindow {
     id: root
@@ -106,7 +106,7 @@ PanelWindow {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
 
-        color: "#ffffff"
+        color: Theme.surfaceContainer
         topRightRadius:10
         bottomRightRadius:10
         clip: true
@@ -162,7 +162,7 @@ PanelWindow {
                     required property var modelData
                     visible: !modelData.isSeparator
                     text: modelData.text
-                    color: modelData.enabled ? "#000000" : "#6c7086"
+                    color: modelData.enabled ? Theme.primary : "#6c7086"
                     horizontalAlignment: Text.AlignLeft
 
                     TapHandler {
@@ -179,7 +179,7 @@ PanelWindow {
 
     InvertedBorder {
         id: ib1
-        roundingColor:"#ffffff"
+        roundingColor: Theme.surfaceContainer
         rounding: 0
         rotation:180
         anchors.bottom:visualRect.top
@@ -189,7 +189,7 @@ PanelWindow {
     }
     InvertedBorder {
         id: ib2
-        roundingColor:"#ffffff"
+        roundingColor: Theme.surfaceContainer
         rounding: 0
         rotation: -90
         anchors.top:visualRect.bottom

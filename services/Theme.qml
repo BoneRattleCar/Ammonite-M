@@ -14,7 +14,7 @@ Singleton{
         watchChanges: true
         onFileChanged: this.reload()
 
-        path: Quickshell.shellDir + "/modules/Bar/theme.json"
+        path: Quickshell.shellDir + "/services/theme.json"
 
         JsonAdapter {
             property var accent: "#8C8BA9"

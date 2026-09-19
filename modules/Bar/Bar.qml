@@ -12,145 +12,27 @@ import org.kde.kirigami as Kirigami
 
 import "../../"
 import "../../services"
+import "modules"
 
 
 PanelWindow {
-        id:root
-        readonly property var occupied: {
-            const occ = {};
-            Hyprland.workspaces.values.map(ws=>occ[ws.id]=ws.active);
-            return occ;
-        }
+    MarginWrapperManager { margin: 15 }
+    Rectangle {
+        id: content
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        color:"transparent"
 
-        readonly property var acWin: {
-            const wholeName= Hyprland.activeToplevel?.title
-            const reg = /^.*\s[—–-]\s/
-            return wholeName.replace(reg, "")
-        }
+        Workspaces {}
 
-        MarginWrapperManager { margin: 15 }
+        ActiveWindow {}
 
-        Rectangle {
-            id: content
+        ColumnLayout {
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            color:"transparent"
+            anchors.bottom: parent.bottom
 
-            Rectangle {
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: Theme.surfaceContainerHigh
-                implicitWidth:30
-                implicitHeight:150
-                radius:15
-
-                ColumnLayout{
-                    anchors.centerIn: parent
-                    Repeater {
-                        model: 5
-                        Rectangle {
-                            required property int index
-                            color:`${occupied[index+1] ? Theme.primary : occupied.hasOwnProperty(index+1) ? Theme.onPrimary : Theme.outlineVariant}`
-                            implicitWidth:15
-                            implicitHeight:15
-                            radius:15
-                        }
-                    }
-                }
-            }
-
-
-            Text{
-                color:Theme.primary
-
-                id:text
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                text:root.acWin ?? "bleh"
-                rotation:-90
-
-                Behavior on text {
-                    SequentialAnimation {
-                        NumberAnimation {
-                            target: text
-                            property: "opacity"
-                            to: 0
-                            duration:100
-                        }
-                        PropertyAction {}
-                        NumberAnimation {
-                            target: text
-                            property: "opacity"
-                            to: 1
-                            duration:100
-
-                        }
-                    }
-                }
-            }
-
-            ColumnLayout {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottom: parent.bottom
-                // spacing:200
-
-                ColumnLayout {
-                    id: trayColumn
-                    Layout.alignment: Qt.AlignHCenter
-                    property int hoveredIndex: -1
-                    property real hoveredY: 0
-
-                    Repeater {
-                        model:SystemTray.items.values
-
-                        delegate: Item{
-                            id: trayItem
-                            required property var modelData
-                            required property int index
-
-                            implicitWidth:25
-                            implicitHeight:25
-
-                            Image{
-                                id:trayIcon
-                                anchors.fill:parent
-                                source: modelData.icon
-                            }
-
-                            HoverHandler {
-                                onHoveredChanged: {
-                                    if(hovered){
-                                        trayColumn.hoveredIndex = index
-                                        trayColumn.hoveredY = trayItem.mapToItem(null, 0, trayItem.height / 2).y
-                                        trayMenu.notifyHover(modelData, trayColumn.hoveredY)
-                                    } else {
-                                        trayMenu.notifyLeave()
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    TrayMenu {
-                        id: trayMenu
-                    }
-                }
-
-                ColumnLayout {
-                    Layout.alignment: Qt.AlignHCenter
-
-                    Text{
-                        color: Theme.primary
-                        text:Time.hour
-                    }
-
-                    Text{
-                        color: Theme.primary
-                        text:Time.mins
-                    }
-                }
-
-
-            }
-                // Colors {}
+            Tray {}
+            TimeWidget {}
         }
+    }
 }

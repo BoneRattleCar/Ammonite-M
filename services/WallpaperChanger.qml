@@ -2,7 +2,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Qt.labs.folderlistmodel
-import "../modules/Bar"
+import "../services"
 import Quickshell.Hyprland
 import Quickshell.Services.SystemTray
 import Quickshell.Widgets
